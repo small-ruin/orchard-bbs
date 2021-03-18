@@ -8,9 +8,7 @@
    View,
  } from 'react-native';
 
- import {
-   Colors,
- } from 'react-native/Libraries/NewAppScreen';
+ import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 import Head from './components/Head';
 import Home from './pages/Home';
@@ -35,9 +33,7 @@ import './crawler/home';
            style={{
              backgroundColor: isDarkMode ? Colors.black : Colors.white,
            }}>
-           <Section>
-             <Home></Home>
-           </Section>
+           <Home></Home>
         </View>
        </ScrollView>
      </SafeAreaView>
