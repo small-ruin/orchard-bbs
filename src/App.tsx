@@ -1,42 +1,43 @@
  import React from 'react';
  import type { ReactElement } from 'react';
- import {
-   SafeAreaView,
-   ScrollView,
-   StatusBar,
-   useColorScheme,
-   View,
- } from 'react-native';
 
- import { Colors } from 'react-native/Libraries/NewAppScreen';
+ import { NavigationContainer } from '@react-navigation/native';
+ import { createStackNavigator } from '@react-navigation/stack';
 
 import Head from './components/Head';
 import Home from './pages/Home';
-import Section from './components/Section';
-import './crawler/home';
+import Board from './pages/Board';
+import Topic from './pages/Topic';
+
+export type RootStackParamList = {
+  Home: undefined,
+  Board: { url: string },
+  Topic: { url: string},
+}
+
+const Stack = createStackNavigator<RootStackParamList>();
 
  const App: () => ReactElement = () => {
-   const isDarkMode = useColorScheme() === 'dark';
-
-   const backgroundStyle = {
-     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-   };
-
    return (
-     <SafeAreaView style={backgroundStyle}>
-       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-       <ScrollView
-         contentInsetAdjustmentBehavior="automatic"
-         style={backgroundStyle}>
-        <Head />
-        <View
-           style={{
-             backgroundColor: isDarkMode ? Colors.black : Colors.white,
-           }}>
-           <Home></Home>
-        </View>
-       </ScrollView>
-     </SafeAreaView>
+     <NavigationContainer>
+        <Stack.Navigator initialRouteName="Home">
+          <Stack.Screen
+            name="Home"
+            component={Home}
+            options={{ header: props => <Head {...props} /> }}
+          />
+          <Stack.Screen
+            name="Board"
+            component={Board}
+            options={{ header: props => <Head {...props} /> }}
+          />
+          <Stack.Screen
+            name="Topic"
+            component={Topic}
+            options={{ header: props => <Head {...props} /> }}
+          />
+        </Stack.Navigator>
+     </NavigationContainer>
    );
  };
 

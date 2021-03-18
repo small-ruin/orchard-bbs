@@ -1,11 +1,12 @@
 import React from 'react';
 import { Text } from 'react-native';
 import { Header, Body, Left, Right, Button, Icon } from 'native-base';
+import { StackHeaderProps } from '@react-navigation/stack';
 
-export default function GFHead() {
+export default function GFHead(props: StackHeaderProps) {
     return <Header>
         <Left>
-        <Button transparent>
+        <Button transparent onPress={props.navigation.goBack}>
             <Icon name='arrow-back' />
         </Button>
         </Left>

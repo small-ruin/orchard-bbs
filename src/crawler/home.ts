@@ -14,7 +14,10 @@ interface Info {
 interface Link {
     text: string,
     href: string | undefined,
+    type: LinkType,
 }
+
+export type LinkType = 'board' | 'topic' | undefined;
 
 export default async function getHomeData() {
     try {
@@ -47,16 +50,21 @@ function analysis(htmlStr: string) {
             targetSection?.infos.push(targetInfo);
             if ($this.find('a').length) {
                 $this.find('a').each(function() {
-                    let $a = $(this), text = $a.text(), href = $a.attr('href');
+                    let $a = $(this), text = $a.text(), href = $a.attr('href'), type: LinkType;
                     if (href) {
                         // 个人信息不显示
                         if (href.match(/action=profile/))
                             return;
+                        if (href.match(/board/))
+                            type = 'board'
+                        if (href.match(/topic/))
+                            type = 'topic'
                         href = parseHref(href);
                     }
                     const a = {
                         text,
                         href,
+                        type,
                     }
                     if (targetInfo) {
                         targetInfo.links ? targetInfo.links.push(a) : (targetInfo.links = [a])
