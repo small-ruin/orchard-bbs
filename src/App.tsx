@@ -11,8 +11,8 @@ import Topic from './pages/Topic';
 
 export type RootStackParamList = {
   Home: undefined,
-  Board: { url: string },
-  Topic: { url: string},
+  Board: { url: string, title?: string },
+  Topic: { url: string, title?: string },
 }
 
 const Stack = createStackNavigator<RootStackParamList>();
