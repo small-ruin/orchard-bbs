@@ -7,11 +7,11 @@
 #define TIMEOUT_SECONDS 600
 #define TEXT_TO_LOOK_FOR @"Welcome to React"
 
-@interface applebbsTests : XCTestCase
+@interface orchardBBSTests : XCTestCase
 
 @end
 
-@implementation applebbsTests
+@implementation orchardBBSTests
 
 - (BOOL)findSubviewInView:(UIView *)view matching:(BOOL(^)(UIView *view))test
 {
