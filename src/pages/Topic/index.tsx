@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import { Text, ScrollView, useWindowDimensions } from 'react-native';
+import { Text, FlatList, useWindowDimensions } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../../App'
 import getTopicData, {TopicData} from '../../crawler/topic'
-import { Card, CardItem } from 'native-base';
+import { Body, Card, CardItem, Container } from 'native-base';
 import HTML from "react-native-render-html";
 
 type TopicScreenProp = StackNavigationProp<RootStackParamList, 'Topic'>;
@@ -28,15 +28,19 @@ export default function Topic({ route, navigation }: Props) {
         }
     }, [])
     console.log(data)
-    return (<ScrollView>
-        {
-            data?.posts.map(post => {
-                return <Card>
+    return (
+        <Container>
+            <FlatList
+                data={data?.posts}
+                renderItem={({item}) => <Card>
                     <CardItem>
-                     <HTML source={{ html: post }} contentWidth={contentWidth} />
+                        <Body>
+                            <HTML source={{ html: item }} contentWidth={contentWidth} />
+                        </Body>
                     </CardItem>
-                </Card>
-            })
-        }
-    </ScrollView>)
+                </Card>}
+            >
+            </FlatList>
+        </Container>
+    )
 }
