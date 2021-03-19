@@ -3,10 +3,9 @@ import { Text, FlatList, useWindowDimensions } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import HTML from "react-native-render-html";
-import { RootStackParamList } from '../../App'
 import getTopicData from '../../crawler/topic'
 import { Body, Card, CardItem, Container } from 'native-base';
-import { TopicData } from '../../types';
+import { RootStackParamList, TopicData } from '../../types';
 
 type TopicScreenProp = StackNavigationProp<RootStackParamList, 'Topic'>;
 type TopicRouteProp = RouteProp<RootStackParamList, 'Topic'>;
@@ -17,8 +16,9 @@ type Props = {
 
 export default function Topic({ route, navigation }: Props) {
     const url = route.params?.url;
-    const contentWidth = useWindowDimensions().width;
+    console.log('topic', url);
     const [data, setData] = useState<TopicData | undefined>(undefined)
+    const [contentWidth,setContentWidth] = useState<number>(useWindowDimensions().width)
     useEffect(() => {
         let topicData: TopicData | undefined;
         (async () => {
@@ -29,6 +29,7 @@ export default function Topic({ route, navigation }: Props) {
                     title: topicData.title,
                 })
             }
+            setContentWidth(useWindowDimensions().width);
         })();
     }, [])
     console.log(data)

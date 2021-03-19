@@ -8,31 +8,26 @@ import Head from './components/Head';
 import Home from './pages/Home';
 import Board from './pages/Board';
 import Topic from './pages/Topic';
-
-export type RootStackParamList = {
-  Home: undefined,
-  Board: { url: string, title?: string },
-  Topic: { url: string, title?: string },
-}
+import { RootStackParamList, ScreenName } from './types';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
  const App: () => ReactElement = () => {
    return (
      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home">
+        <Stack.Navigator initialRouteName={ScreenName.HOME}>
           <Stack.Screen
-            name="Home"
+            name={ScreenName.HOME}
             component={Home}
             options={{ header: props => <Head {...props} /> }}
           />
           <Stack.Screen
-            name="Board"
+            name={ScreenName.BOARD}
             component={Board}
             options={{ header: props => <Head {...props} /> }}
           />
           <Stack.Screen
-            name="Topic"
+            name={ScreenName.TOPIC}
             component={Topic}
             options={{ header: props => <Head {...props} /> }}
           />

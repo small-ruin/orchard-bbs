@@ -16,7 +16,7 @@ type LinkType = 'board' | 'topic' | undefined;
 
 interface BoardData {
     title: string,
-    subBoard: BoardSectionData[],
+    subBoards: BoardSectionData[],
     topics: Link[],
 }
 
@@ -31,6 +31,16 @@ enum ScreenName {
     TOPIC = 'Topic',
 }
 
+type RootStackParamList = {
+    Home: undefined,
+    Board: { url: string, title?: string },
+    Topic: { url: string, title?: string },
+}
+
 export type {
-    BoardSectionData, Link, LinkType, Info, BoardData, TopicData, ScreenName
+    BoardSectionData, Link, LinkType, Info, BoardData, TopicData, RootStackParamList
+}
+
+export {
+    ScreenName
 }

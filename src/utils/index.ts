@@ -1,5 +1,6 @@
+import { StackNavigationProp } from '@react-navigation/stack';
 import {HOME} from '../crawler/urls';
-import { LinkType } from '../types';
+import { LinkType, RootStackParamList, ScreenName } from '../types';
 
 export function parseHref(href: string) {
     if (href.match(/^\?/)) return HOME + href;
@@ -14,4 +15,14 @@ export function getLinkTypeFromHref(href: string): LinkType {
 }
 export function html($: cheerio.Root, $node: cheerio.Cheerio) {
     return $('<div>').append($node.clone()).html()
+}
+export function jump(navigation: StackNavigationProp<RootStackParamList, ScreenName>, url: string, type: LinkType) {
+    if (!url)
+        return;
+    if (type === 'board') {
+        navigation.navigate('Board', { url });
+    }
+    if (type === 'topic') {
+        navigation.navigate('Topic', { url });
+    }
 }

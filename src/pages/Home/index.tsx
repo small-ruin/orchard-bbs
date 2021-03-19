@@ -4,10 +4,11 @@ import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import getHomeData from '../../crawler/home';
 import { Colors } from '../../commonStyle';
-import { RootStackParamList } from '../../App'
-import {BoardSectionData, LinkType} from '../../types'
+import {BoardSectionData, LinkType, RootStackParamList, ScreenName} from '../../types'
+import { jump } from '../../utils';
+import BoardSection from '../../components/BoardSection'
 
-type HomeScreenProp = StackNavigationProp<RootStackParamList, 'Home'>;
+type HomeScreenProp = StackNavigationProp<RootStackParamList, ScreenName.HOME>;
 type Props = {
     navigation: HomeScreenProp,
 }
@@ -25,38 +26,15 @@ export default function Home({ navigation }: Props) {
             contentInsetAdjustmentBehavior="automatic"
         >
             { 
-                data.map(i => <Card style={styles.card} noShadow key={i.name}>
-                    <CardItem header>
-                        <Text style={styles.cardHeader}>{i.name}</Text>
-                    </CardItem>
-                    { i.infos?.map(info => <CardItem key={info.name}>
-                        <Body>
-                            <Text style={styles.linkHeader}>{ info.name }</Text>
-                            <List style={styles.list}>
-                                {
-                                    info.links?.map(link => <ListItem key={link.text + link.href} onPress={() => link.href && jump(link.href, link.type)}>
-                                        {
-                                            <Text style={styles.link}>{link.text}</Text>
-                                        }
-                                    </ListItem>)
-                                }
-                            </List>
-                        </Body>
-                    </CardItem>)}
-                </Card>)
+                data.map(i => <BoardSection
+                    key={i.name + i.infos.map(j => j.name).join('')}
+                    data={i}
+                    onInfoClick={(link) => link.href && jump(navigation, link.href, link.type)}
+                ></BoardSection>)
             }
         </ScrollView>
     
-    function jump(url: string, type: LinkType) {
-        if (!url)
-            return;
-        if (type === 'board') {
-            navigation.navigate('Board', { url });
-        }
-        if (type === 'topic') {
-            navigation.navigate('Topic', { url });
-        }
-    }
+
 }
 
 const styles = StyleSheet.create({

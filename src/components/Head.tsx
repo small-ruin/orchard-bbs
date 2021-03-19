@@ -3,8 +3,7 @@ import { Text } from 'react-native';
 import { Header, Body, Left, Right, Button, Icon } from 'native-base';
 import { StackHeaderProps } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
-import { RootStackParamList } from '../App';
-import { ScreenName } from '../types'
+import { RootStackParamList, ScreenName } from '../types'
 
 type RootRouteProp = RouteProp<RootStackParamList, ScreenName>;
 
