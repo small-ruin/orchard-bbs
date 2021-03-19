@@ -13,7 +13,7 @@ export function getLinkTypeFromHref(href: string): LinkType {
     if (href.match(/topic/))
         return 'topic';
 }
-export function html($: cheerio.Root, $node: cheerio.Cheerio) {
+export function html($: cheerio.Root, $node: cheerio.Cheerio) { 
     return $('<div>').append($node.clone()).html()
 }
 export function jump(navigation: StackNavigationProp<RootStackParamList, ScreenName>, url: string, type: LinkType) {
