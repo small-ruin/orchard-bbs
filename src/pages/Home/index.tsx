@@ -2,9 +2,10 @@ import { Card, CardItem, H1, H2, List, ListItem, Body } from 'native-base';
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import getHomeData, {HomeSectionData, LinkType} from '../../crawler/home';
+import getHomeData from '../../crawler/home';
 import { Colors } from '../../commonStyle';
 import { RootStackParamList } from '../../App'
+import {BoardSectionData, LinkType} from '../../types'
 
 type HomeScreenProp = StackNavigationProp<RootStackParamList, 'Home'>;
 type Props = {
@@ -12,9 +13,11 @@ type Props = {
 }
 
 export default function Home({ navigation }: Props) {
-    const [data, setData] = useState<HomeSectionData[]>([]);
-    useEffect(async () => {
-        setData(await getHomeData() || []);
+    const [data, setData] = useState<BoardSectionData[]>([]);
+    useEffect(() => {
+        (async () => {
+            setData(await getHomeData() || []);
+        })()
     }, []);
 
     return <ScrollView
@@ -31,7 +34,7 @@ export default function Home({ navigation }: Props) {
                             <Text style={styles.linkHeader}>{ info.name }</Text>
                             <List style={styles.list}>
                                 {
-                                    info.links?.map(link => <ListItem key={link.text + link.href} onPress={() => jump(link.href, link.type)}>
+                                    info.links?.map(link => <ListItem key={link.text + link.href} onPress={() => link.href && jump(link.href, link.type)}>
                                         {
                                             <Text style={styles.link}>{link.text}</Text>
                                         }

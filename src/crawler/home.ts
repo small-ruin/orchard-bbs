@@ -1,39 +1,24 @@
 import cheerio from 'cheerio';
 import { get } from './api';
 import { HOME } from './urls';
-import { parseHref } from '../utils'
-
-export interface HomeSectionData {
-    name: string,
-    infos: Info[],
-}
-interface Info {
-    name: string,
-    links?: Link[]
-}
-interface Link {
-    text: string,
-    href: string | undefined,
-    type: LinkType,
-}
-
-export type LinkType = 'board' | 'topic' | undefined;
+import { parseHref, getLinkTypeFromHref } from '../utils'
+import { BoardSectionData, LinkType, Info } from '../types'
 
 export default async function getHomeData() {
     try {
         const res = await get(HOME);
-        return analysis(res.data);
+        return analysisBoardSection(res.data);
     } catch (e) {
         console.error(e);
     }
 }
 
-let targetSection: HomeSectionData | null = null, targetInfo: Info | null = null;
+let targetSection: BoardSectionData | null = null, targetInfo: Info | null = null;
 
-function analysis(htmlStr: string) {
-    const arr: HomeSectionData[] = []
+export function analysisBoardSection(htmlStr: string) {
+    const arr: BoardSectionData[] = []
     const $ = cheerio.load(htmlStr);
-    $('.catbg, .info, .children.windowbg').each(function(i) {
+    $('.catbg, .info, .children.windowbg').each(function(this: Element) {
         const $this = $(this);
         if ($this.hasClass('catbg')) {
             targetSection = {
@@ -49,25 +34,21 @@ function analysis(htmlStr: string) {
             }
             targetSection?.infos.push(targetInfo);
             if ($this.find('a').length) {
-                $this.find('a').each(function() {
+                $this.find('a').each(function(this: Element) {
                     let $a = $(this), text = $a.text(), href = $a.attr('href'), type: LinkType;
                     if (href) {
                         // 个人信息不显示
                         if (href.match(/action=profile/))
                             return;
-                        if (href.match(/board/))
-                            type = 'board'
-                        if (href.match(/topic/))
-                            type = 'topic'
-                        href = parseHref(href);
-                    }
-                    const a = {
-                        text,
-                        href,
-                        type,
-                    }
-                    if (targetInfo) {
-                        targetInfo.links ? targetInfo.links.push(a) : (targetInfo.links = [a])
+
+                        const a = {
+                            text,
+                            href: parseHref(href),
+                            type: getLinkTypeFromHref(href),
+                        }
+                        if (targetInfo) {
+                            targetInfo.links ? targetInfo.links.push(a) : (targetInfo.links = [a])
+                        }
                     }
                 })
             }

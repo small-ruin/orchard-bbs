@@ -1,11 +1,7 @@
 import cheerio from 'cheerio';
 import { get } from './api';
 import { html } from '../utils';
-
-export interface TopicData {
-    title: string,
-    posts: string[],
-}
+import { TopicData } from '../types'
 
 export default async function getTopicData(url: string): Promise<TopicData | undefined> {
     try {
@@ -19,7 +15,7 @@ export default async function getTopicData(url: string): Promise<TopicData | und
 function analysis(htmlStr: string) {
     const $ = cheerio.load(htmlStr);
     const topicData: TopicData = { title: '', posts: []}
-    $('#top_subject, .post, .poster, .attachments').each(function() {
+    $('#top_subject, .post, .poster, .attachments').each(function(this: Element) {
         let $node = $(this);
         if ($node.attr('id') === 'top_subject') {
             topicData.title = $node.text();
