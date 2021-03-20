@@ -29,16 +29,23 @@ enum ScreenName {
     HOME = 'Home',
     BOARD = 'Board',
     TOPIC = 'Topic',
+    STACK = 'Stack',
+    LOGIN = 'LOGIN',
 }
 
-type RootStackParamList = {
-    Home: undefined,
-    Board: { url: string, title?: string },
-    Topic: { url: string, title?: string },
+interface StackNavParams {
+    url: string,
+    title?: string, 
 }
+interface DrawerNavParams {
+    params: StackNavParams,
+    screen: ScreenName
+}
+
+type RootStackParamList<T> = Record<ScreenName, T>
 
 export type {
-    BoardSectionData, Link, LinkType, Info, BoardData, TopicData, RootStackParamList
+    BoardSectionData, Link, LinkType, Info, BoardData, TopicData, RootStackParamList, StackNavParams, DrawerNavParams
 }
 
 export {

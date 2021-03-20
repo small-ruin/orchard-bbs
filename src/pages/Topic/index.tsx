@@ -5,10 +5,10 @@ import { RouteProp } from '@react-navigation/native';
 import HTML from "react-native-render-html";
 import getTopicData from '../../crawler/topic'
 import { Body, Card, CardItem, Container } from 'native-base';
-import { RootStackParamList, TopicData } from '../../types';
+import { RootStackParamList, ScreenName, StackNavParams, TopicData } from '../../types';
 
-type TopicScreenProp = StackNavigationProp<RootStackParamList, 'Topic'>;
-type TopicRouteProp = RouteProp<RootStackParamList, 'Topic'>;
+type TopicScreenProp = StackNavigationProp<RootStackParamList<StackNavParams>, ScreenName.TOPIC>;
+type TopicRouteProp = RouteProp<RootStackParamList<StackNavParams>, ScreenName.TOPIC>;
 type Props = {
     navigation: TopicScreenProp,
     route: TopicRouteProp,
