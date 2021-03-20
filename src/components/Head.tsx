@@ -10,23 +10,35 @@ type RootRouteProp = RouteProp<RootStackParamList<StackNavParams>, ScreenName>;
 
 export default function GFHead(props: StackHeaderProps | DrawerHeaderProps) {
     const route = props?.scene?.route as RootRouteProp
+    const routeName = route.name
+    let left;
+    if ('navigation' in props) {
+        const { navigation } = props;
+        left = <Left style={{ flex: 0 }}>
+            {props.navigation && <Button transparent onPress={() => back()}>
+                <Icon name='arrow-back' />
+            </Button>}
+        </Left>
 
-    if (route.params && 'navigation' in props) {
-        const title = route.params.title;
-        return <Header>
-            <Left style={{ flex: 0 }}>
-                {props.navigation && <Button transparent onPress={props.navigation.goBack}>
-                    <Icon name='arrow-back' />
-                </Button>}
-            </Left>
-            <Body><Text numberOfLines={1}>{title || '纯美苹果园'}</Text></Body>
-            <Right style={{ flex: 0 }}>
-                <Button transparent>
-                    <Icon name='menu' />
-                </Button>
-            </Right>
-        </Header>
+        function back() {
+            if (routeName === ScreenName.LOGIN) {
+                navigation.navigate(ScreenName.HOME);
+            } else {
+                navigation.goBack();
+            }
+        }
+    } else {
+        left = <Left></Left>
     }
 
-    return <Header></Header>
+    const title = route.params.title;
+    return <Header>
+        {left}
+        <Body><Text numberOfLines={1}>{title || '纯美苹果园'}</Text></Body>
+        <Right style={{ flex: 0 }}>
+            <Button transparent>
+                <Icon name='menu' />
+            </Button>
+        </Right>
+    </Header>
 }

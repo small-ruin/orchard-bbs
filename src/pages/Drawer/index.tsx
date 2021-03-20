@@ -25,7 +25,6 @@ export default function Drawer(props: DrawerContentComponentProps<DrawerContentO
     );
 
     function handleAvatarClick() {
-        // Alert.alert('hi')
         props.navigation.navigate(ScreenName.STACK, { screen: ScreenName.LOGIN, params: { title: '登录' } });
     }
 }
