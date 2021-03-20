@@ -1,6 +1,8 @@
 import { StackNavigationProp } from '@react-navigation/stack';
-import {HOME} from '../crawler/urls';
+import {Urls} from '../crawler/urls';
 import { DrawerNavParams, LinkType, RootStackParamList, ScreenName } from '../types';
+
+const {HOME} = Urls;
 
 export function parseHref(href: string) {
     if (href.match(/^\?/)) return HOME + href;

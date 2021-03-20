@@ -1,12 +1,12 @@
 import cheerio from 'cheerio';
 import { get } from './api';
-import { HOME } from './urls';
+import { Urls } from './urls';
 import { parseHref, getLinkTypeFromHref } from '../utils'
 import { BoardSectionData, LinkType, Info } from '../types'
 
 export default async function getHomeData() {
     try {
-        const res = await get(HOME);
+        const res = await get(Urls.HOME);
         return analysisBoardSection(res.data);
     } catch (e) {
         console.error(e);

@@ -12,6 +12,7 @@ import Board from './pages/Board';
 import Topic from './pages/Topic';
 import GFDrawer from './pages/Drawer'
 import Login from './pages/Login';
+import { Root } from 'native-base';
 
 const Stack = createStackNavigator<RootStackParamList<StackNavParams | undefined>>();
 const Drawer = createDrawerNavigator<RootStackParamList<DrawerNavParams | undefined>>();
@@ -36,22 +37,24 @@ const App: () => ReactElement = () => {
   </Stack.Navigator>
 
   return (
-    <NavigationContainer>
-      <Drawer.Navigator
-        drawerContent={props => <GFDrawer {...props}></GFDrawer>}
-        openByDefault
-        initialRouteName={ScreenName.HOME}>
-        <Drawer.Screen
-          name={ScreenName.HOME}
-          component={Home}
-          options={{ header: props => <Head {...props} /> }}
-        />
-        <Drawer.Screen
-          name={ScreenName.STACK}
-          component={stackNavigators}
-        />
-      </Drawer.Navigator>
-    </NavigationContainer>
+    <Root>
+      <NavigationContainer>
+        <Drawer.Navigator
+          drawerContent={props => <GFDrawer {...props}></GFDrawer>}
+          openByDefault
+          initialRouteName={ScreenName.HOME}>
+          <Drawer.Screen
+            name={ScreenName.HOME}
+            component={Home}
+            options={{ header: props => <Head {...props} /> }}
+          />
+          <Drawer.Screen
+            name={ScreenName.STACK}
+            component={stackNavigators}
+          />
+        </Drawer.Navigator>
+      </NavigationContainer>
+    </Root>
   );
 };
 

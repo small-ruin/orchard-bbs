@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, ScrollView } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import getHomeData from '../../crawler/home';
-import { Colors } from '../../commonStyle';
 import {BoardSectionData, RootStackParamList, ScreenName, StackNavParams} from '../../types'
 import { jump } from '../../utils';
 import BoardSection from '../../components/BoardSection'
@@ -16,7 +15,7 @@ export default function Home({ navigation }: Props) {
     const [data, setData] = useState<BoardSectionData[]>([]);
     useEffect(() => {
         (async () => {
-            // setData(await getHomeData() || []);
+            setData(await getHomeData() || []);
         })()
     }, []);
 
