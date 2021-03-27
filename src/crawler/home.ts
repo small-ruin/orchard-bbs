@@ -22,7 +22,7 @@ export function analysisBoardSection(htmlStr: string) {
         const $this = $(this);
         if ($this.hasClass('catbg')) {
             targetSection = {
-                name: $this.text(),
+                name: $this.text().trim(),
                 infos: []
             }
             arr.push(targetSection)
@@ -30,12 +30,12 @@ export function analysisBoardSection(htmlStr: string) {
 
         if ($this.hasClass('info')) {
             targetInfo = {
-                name: $this.find('.subject').text(),
+                name: $this.find('.subject').text().trim(),
             }
             targetSection?.infos.push(targetInfo);
             if ($this.find('a').length) {
                 $this.find('a').each(function(this: Element) {
-                    let $a = $(this), text = $a.text(), href = $a.attr('href'), type: LinkType;
+                    let $a = $(this), text = $a.text().trim(), href = $a.attr('href'), type: LinkType;
                     if (href) {
                         // 个人信息不显示
                         if (href.match(/action=profile/))

@@ -20,7 +20,7 @@ function analysis(htmlStr: string) {
     $('td.subject span a').each(function(this: Element) {
         let $node = $(this);
         let topic: Partial<Link> = {};
-        topic.text = $node.text();
+        topic.text = $node.text().trim();
         topic.href = parseHref($(this).attr('href') || '');
         topic.type = 'topic';
 
