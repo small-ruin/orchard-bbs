@@ -19,8 +19,8 @@ export default function BoardSection({ data, onInfoClick }: Props) {
                 {!isSingleInfo && <Text style={styles.linkHeader}>{ info.name }</Text>}
                 <List style={styles.list}>
                     {
-                        info.links?.map(link => <ListItem
-                            key={link.text + link.href}
+                        info.links?.map((link, idx) => <ListItem
+                            key={(link.text || idx) + (link.href || '')}
                             onPress={() => onInfoClick(link)}>
                             {
                                 <Text style={styles.link}>{link.text}</Text>
@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
     },
     cardHeaderText: {
         color: '#fff',
+        fontFamily: 'PingFangSC-Medium',
     },
     cardBodyContainer: {
         flexDirection: 'column',

@@ -1,12 +1,14 @@
 import { StackNavigationProp } from '@react-navigation/stack';
 import {Urls} from '../crawler/urls';
-import { DrawerNavParams, LinkType, RootStackParamList, ScreenName } from '../types';
+import { DrawerNavParams, LinkType, RootStackParamList, ScreenName, StackNavParams } from '../types';
 
-const {HOME} = Urls;
+const {HOME, HOST} = Urls;
 
 export function parseHref(href: string) {
     if (href.match(/^\?/)) return HOME + href;
     if (href.match(/^index.php\?/)) return href.replace(/index.php/, HOME);
+    if (href.match(/^\//)) return HOST + href;
+    return undefined;
 }
 
 export function getLinkTypeFromHref(href: string): LinkType {
@@ -18,7 +20,7 @@ export function getLinkTypeFromHref(href: string): LinkType {
 export function html($: cheerio.Root, $node: cheerio.Cheerio) { 
     return $('<div>').append($node.clone()).html()
 }
-export function jump(navigation: StackNavigationProp<RootStackParamList<DrawerNavParams | undefined>, ScreenName>, url: string, type: LinkType) {
+export function jump(navigation: StackNavigationProp<RootStackParamList<DrawerNavParams | StackNavParams | undefined>, ScreenName>, url: string, type: LinkType) {
     if (!url)
         return;
     if (type === 'board') {

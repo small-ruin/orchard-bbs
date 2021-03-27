@@ -20,9 +20,21 @@ interface BoardData {
     topics: Link[],
 }
 
+interface Post {
+    title: string,
+    poster: Poster,
+    content: string,
+}
+interface Poster {
+    user: string,
+    postGroup: string,
+    avatar: string | null,
+    postCount: string,
+    karma: number | string,
+}
 interface TopicData {
     title: string,
-    posts: string[],
+    posts: Post[],
 }
 
 enum ScreenName {
@@ -45,7 +57,8 @@ interface DrawerNavParams {
 type RootStackParamList<T> = Record<ScreenName, T>
 
 export type {
-    BoardSectionData, Link, LinkType, Info, BoardData, TopicData, RootStackParamList, StackNavParams, DrawerNavParams
+    BoardSectionData, Link, LinkType, Info, BoardData, TopicData, RootStackParamList, StackNavParams, DrawerNavParams,
+    Post, Poster,
 }
 
 export {

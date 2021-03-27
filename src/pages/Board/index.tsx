@@ -4,12 +4,12 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { List, ListItem } from 'native-base';
 import getBoardData from '../../crawler/board';
-import { BoardData, RootStackParamList, ScreenName } from '../../types';
+import { BoardData, RootStackParamList, ScreenName, StackNavParams } from '../../types';
 import { jump } from '../../utils';
 import BoardSection from '../../components/BoardSection';
 
-type BoardNavProp = StackNavigationProp<RootStackParamList, ScreenName.BOARD>;
-type BoardRouteProp = RouteProp<RootStackParamList, ScreenName.BOARD>;
+type BoardNavProp = StackNavigationProp<RootStackParamList<StackNavParams>, ScreenName.BOARD>;
+type BoardRouteProp = RouteProp<RootStackParamList<StackNavParams>, ScreenName.BOARD>;
 type Props = {
     navigation: BoardNavProp,
     route: BoardRouteProp,
