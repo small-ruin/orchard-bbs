@@ -41,7 +41,7 @@ const App: () => ReactElement = () => {
       <NavigationContainer>
         <Drawer.Navigator
           drawerContent={props => <GFDrawer {...props}></GFDrawer>}
-          openByDefault
+          // openByDefault
           initialRouteName={ScreenName.HOME}>
           <Drawer.Screen
             name={ScreenName.HOME}

@@ -9,26 +9,25 @@ interface Props {
     onInfoClick: (link: Link) => void,
 }
 export default function BoardSection({ data, onInfoClick }: Props) {
+   const isSingleInfo = data.infos.length === 1;
     return (
         <Card style={styles.card} noShadow key={data.name}>
-            <CardItem header>
-                <Text style={styles.cardHeader}>{data.name}</Text>
+            <CardItem header  style={styles.cardHeader}>
+                <Text style={styles.cardHeaderText}>{data.name}</Text>
             </CardItem>
-            { data.infos?.map(info => <CardItem key={info.name}>
-                <Body>
-                    <Text style={styles.linkHeader}>{ info.name }</Text>
-                    <List style={styles.list}>
-                        {
-                            info.links?.map(link => <ListItem
-                                key={link.text + link.href}
-                                onPress={() => onInfoClick(link)}>
-                                {
-                                    <Text style={styles.link}>{link.text}</Text>
-                                }
-                            </ListItem>)
-                        }
-                    </List>
-                </Body>
+            { data.infos?.map(info => <CardItem style={styles.cardBodyContainer} key={info.name}>
+                {!isSingleInfo && <Text style={styles.linkHeader}>{ info.name }</Text>}
+                <List style={styles.list}>
+                    {
+                        info.links?.map(link => <ListItem
+                            key={link.text + link.href}
+                            onPress={() => onInfoClick(link)}>
+                            {
+                                <Text style={styles.link}>{link.text}</Text>
+                            }
+                        </ListItem>)
+                    }
+                </List>
             </CardItem>)}
         </Card>
     )
@@ -42,13 +41,20 @@ const styles = StyleSheet.create({
         borderRightWidth: 0,
     },
     cardHeader: {
-        color: Colors.primary,
+        backgroundColor: '#2e5c6e',
+    },
+    cardHeaderText: {
+        color: '#fff',
+    },
+    cardBodyContainer: {
+        flexDirection: 'column',
+        alignItems: 'stretch',
     },
     list: {
         flex: 1,
     },
     linkHeader: {
-        color: Colors.dark,
+        color: '#2b5f75',
     },
     link: {
         color: Colors.darker
