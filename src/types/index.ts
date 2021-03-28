@@ -14,10 +14,15 @@ interface Link {
 
 type LinkType = 'board' | 'topic' | undefined;
 
+interface Page {
+    now: number,
+    total: number,
+}
 interface BoardData {
     title: string,
     subBoards: BoardSectionData[],
     topics: Link[],
+    page?: Page,
 }
 
 interface Post {
@@ -36,6 +41,7 @@ interface Poster {
 interface TopicData {
     title: string,
     posts: Post[],
+    page?: Page,
 }
 
 enum ScreenName {
@@ -59,7 +65,7 @@ type RootStackParamList<T> = Record<ScreenName, T>
 
 export type {
     BoardSectionData, Link, LinkType, Info, BoardData, TopicData, RootStackParamList, StackNavParams, DrawerNavParams,
-    Post, Poster,
+    Post, Poster, Page
 }
 
 export {

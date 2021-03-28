@@ -3,6 +3,7 @@ import { get } from './api';
 import { parseHref } from '../utils';
 import { analysisBoardSection } from './home';
 import { BoardData, Link } from '../types';
+import getPage from './page';
 
 
 export default async function getBoardData(url: string): Promise<BoardData | undefined> {
@@ -28,5 +29,9 @@ function analysis(htmlStr: string) {
             boardData.topics.push(topic as Link);
         }
     })
+
+    const page = getPage($);
+    if (page)
+        boardData.page = page;
     return boardData;
 }

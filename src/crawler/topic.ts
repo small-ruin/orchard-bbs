@@ -2,6 +2,7 @@ import cheerio from 'cheerio';
 import { get } from './api';
 import { html, parseHref } from '../utils';
 import { Post, Poster, TopicData } from '../types'
+import getPage from './page';
 
 export default async function getTopicData(url: string): Promise<TopicData | undefined> {
     try {
@@ -45,5 +46,10 @@ function analysis(htmlStr: string) {
             topicData.posts.push(post as Post);
         }
     })
+
+    const page = getPage($);
+    if (page) {
+        topicData.page = page;
+    }
     return topicData;
 }
