@@ -14,6 +14,8 @@ const Colors = {
     GreyBlue_舛花: '#577C8A',
     DarkGreyBlue_蓝鼠: '#566C73',
     MiddleBlue_花浅葱: '#1E88A8',
+    Grey: '#333',
+    White: '#fffffb',
 }
 
 const FontFamily = {

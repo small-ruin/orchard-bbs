@@ -1,7 +1,7 @@
 import { Body, Card, CardItem, List, ListItem, Text } from 'native-base';
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Colors } from '../commonStyle';
+import { Colors, FontFamily } from '../commonStyle';
 import { BoardSectionData, Link } from '../types';
 
 interface Props {
@@ -41,11 +41,11 @@ const styles = StyleSheet.create({
         borderRightWidth: 0,
     },
     cardHeader: {
-        backgroundColor: '#2e5c6e',
+        backgroundColor: Colors.DarkBlue_御召御纳户,
     },
     cardHeaderText: {
-        color: '#fff',
-        fontFamily: 'PingFangSC-Medium',
+        color: Colors.White,
+        fontFamily: FontFamily.medium,
     },
     cardBodyContainer: {
         flexDirection: 'column',
@@ -55,9 +55,9 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     linkHeader: {
-        color: '#2b5f75',
+        color: Colors.DarkBlue_御召御纳户,
     },
     link: {
-        color: Colors.darker
+        color: Colors.Grey
     }
 })

@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start'
     },
     postTitle: {
-        color: '#fff',
+        color: Colors.White,
         fontSize: 16,
         fontFamily: 'PingFangSC-Medium'
     },
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
         marginTop: 3,
     },
     userItem: {
-        color: '#fffffb',
+        color: Colors.White,
         marginLeft: 5,
         lineHeight: 18,
     }
