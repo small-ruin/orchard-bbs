@@ -1,26 +1,23 @@
-import { Alert, TouchableHighlight } from 'react-native';
-import { Container, Text, View } from 'native-base';
-import React, { useState } from 'react';
-import UserAvatar from 'react-native-user-avatar';
+import { StyleSheet, TouchableOpacity } from 'react-native';
+import { Text } from 'native-base';
+import React, { useEffect, useState } from 'react';
 import { DrawerContentComponentProps, DrawerContentOptions, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { ScreenName } from '../../types';
+import { Colors, FontFamily } from '../../commonStyle';
 
-export default function Drawer(props: DrawerContentComponentProps<DrawerContentOptions>) {
-    const [userName, setUserName] = useState<string>('未登录');
-    const [userImgSrc, setUserImgSrc] = useState<string | undefined>();
+interface Props extends DrawerContentComponentProps<DrawerContentOptions> {
+    username: string,
+}
+
+export default function Drawer(props: Props) {
     return (
         <DrawerContentScrollView {...props}>
-            <TouchableHighlight
+            <TouchableOpacity
                 style={{ alignItems: 'flex-start' }}
                 onPress={() => handleAvatarClick()}
             >
-                <UserAvatar
-                    name={userName.split('')[0]}
-                    src={userImgSrc}
-                    size={48}
-                ></UserAvatar>
-            </TouchableHighlight>
-            <Text>{userName}</Text>
+                <Text style={styles.avatar}>{props.username}</Text>
+            </TouchableOpacity>
         </DrawerContentScrollView>
     );
 
@@ -28,4 +25,13 @@ export default function Drawer(props: DrawerContentComponentProps<DrawerContentO
         props.navigation.navigate(ScreenName.STACK, { screen: ScreenName.LOGIN, params: { title: '登录' } });
     }
 }
+
+const styles = StyleSheet.create({
+    avatar: {
+        fontSize: 24,
+        fontFamily: FontFamily.medium,
+        color: Colors.DarkGreyBlue_蓝鼠,
+        marginLeft: 10
+    }
+})
 

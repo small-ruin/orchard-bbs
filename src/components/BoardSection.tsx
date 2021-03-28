@@ -15,7 +15,7 @@ export default function BoardSection({ data, onInfoClick }: Props) {
             <CardItem header  style={styles.cardHeader}>
                 <Text style={styles.cardHeaderText}>{data.name}</Text>
             </CardItem>
-            { data.infos?.map(info => <CardItem style={styles.cardBodyContainer} key={info.name}>
+            { data.infos.filter(info => info.links)?.map(info => <CardItem style={styles.cardBodyContainer} key={info.name}>
                 {!isSingleInfo && <Text style={styles.linkHeader}>{ info.name }</Text>}
                 <List style={styles.list}>
                     {
