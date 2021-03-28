@@ -23,12 +23,13 @@ interface BoardData {
 interface Post {
     title: string,
     poster: Poster,
+    time?: string,
     content: string,
 }
 interface Poster {
     user: string,
     postGroup: string,
-    avatar: string | null,
+    avatar?: string,
     postCount: string,
     karma: number | string,
 }

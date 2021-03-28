@@ -52,6 +52,7 @@ export default function Topic({ route, navigation }: Props) {
             { shouldShowSpinner && <Spinner  /> }
             <FlatList
                 data={data?.posts}
+                keyExtractor={(item, idx) => item.time || idx + ''}
                 renderItem={({item}) => <Card style={styles.card} >
                     <CardItem header style={[styles.cardItem, styles.cardTitleItem]} bordered>
                             <Text style={styles.postTitle} numberOfLines={1}>{ item.title }</Text>
@@ -60,6 +61,7 @@ export default function Topic({ route, navigation }: Props) {
                                 <Text style={styles.userItem}>{ item.poster.postGroup }</Text>
                                 <Text style={styles.userItem}>{ item.poster.postCount }</Text>
                             </View>
+                            <Text style={[styles.userItem, { marginLeft: 0 }]}>{item.time}</Text>
                     </CardItem>
                     <CardItem style={styles.cardItem}>
                         <Body>

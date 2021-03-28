@@ -27,6 +27,10 @@ function analysis(htmlStr: string) {
             if ($post) {
                 post.title = $post.find('h5 a').text().trim();
                 post.content = html($, $post.find('.post')) || '';
+
+                const time = $post.find('.smalltext').text().match(/«\s+(.+)\s+»/);
+                if (time)
+                    post.time = time[1]?.trim();
             }
             if ($poster) {
                 const poster:Partial<Poster> = {}
@@ -35,6 +39,7 @@ function analysis(htmlStr: string) {
                 poster.karma = $poster.find('.karma').text();
                 poster.postGroup = $poster.find('.postgroup').text(); 
                 poster.postCount = $poster.find('.postcount').text();
+
                 post.poster = poster as Poster;
             }
             topicData.posts.push(post as Post);
