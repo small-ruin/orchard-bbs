@@ -3,6 +3,7 @@ import { get } from './api';
 import { Urls } from './urls';
 import { parseHref, getLinkTypeFromHref } from '../utils'
 import { BoardSectionData, LinkType, Info } from '../types'
+import { user } from '../store'
 
 export default async function getHomeData() {
     try {
@@ -18,6 +19,9 @@ let targetSection: BoardSectionData | null = null, targetInfo: Info | null = nul
 export function analysisBoardSection(htmlStr: string) {
     const arr: BoardSectionData[] = []
     const $ = cheerio.load(htmlStr);
+    // 用户名
+    user.setUserName($('.greeting').text().replace(/^您好 /, ''));
+    // 首页内容
     $('.catbg, .info, .children.windowbg').each(function(this: Element) {
         const $this = $(this);
         if ($this.hasClass('catbg')) {
@@ -40,6 +44,10 @@ export function analysisBoardSection(htmlStr: string) {
                         // 个人信息不显示
                         if (href.match(/action=profile/))
                             return;
+
+                        if (href === '') {
+                            console.error('!!! 发现空链接！')
+                        } 
 
                         const a = {
                             text,

@@ -14,6 +14,8 @@ import GFDrawer from './pages/Drawer'
 import Login from './pages/Login';
 import { Root } from 'native-base';
 
+import { user } from './store'
+
 const Stack = createStackNavigator<RootStackParamList<StackNavParams | undefined>>();
 const Drawer = createDrawerNavigator<RootStackParamList<DrawerNavParams | undefined>>();
 
@@ -40,7 +42,7 @@ const App: () => ReactElement = () => {
     <Root>
       <NavigationContainer>
         <Drawer.Navigator
-          drawerContent={props => <GFDrawer {...props}></GFDrawer>}
+          drawerContent={props => <GFDrawer {...props} username={user.username}></GFDrawer>}
           // openByDefault
           initialRouteName={ScreenName.HOME}>
           <Drawer.Screen
