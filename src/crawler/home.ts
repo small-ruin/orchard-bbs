@@ -26,7 +26,7 @@ export function analysisBoardSection(htmlStr: string) {
         const $this = $(this);
         if ($this.hasClass('catbg')) {
             targetSection = {
-                name: $this.text().trim(),
+                name: $this.text().replace(/未读帖子/, '').trim(),
                 infos: []
             }
             arr.push(targetSection)
