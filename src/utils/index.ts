@@ -8,7 +8,7 @@ export function parseHref(href: string) {
     if (href.match(/^\?/)) return HOME + href;
     if (href.match(/^index.php\?/)) return href.replace(/index.php/, HOME);
     if (href.match(/^\//)) return HOST + href;
-    return undefined;
+    return href;
 }
 
 export function getLinkTypeFromHref(href: string): LinkType {
