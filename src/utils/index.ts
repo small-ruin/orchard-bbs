@@ -11,6 +11,16 @@ export function parseHref(href: string) {
     return href;
 }
 
+export function urlChangePage(url: string, target: number) {
+    let step = 0;
+    if (url.match(/topic/)) {
+        step = 20;
+    } else if (url.match(/board/)) {
+        step = 40;
+    }
+    return url.replace(/([topic|board]=\d+\.)(\d+)/, (match, $1) => $1 + (target - 1) * step + '');
+}
+
 export function getLinkTypeFromHref(href: string): LinkType {
     if (href.match(/board/))
         return 'board';

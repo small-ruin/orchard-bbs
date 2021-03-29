@@ -1,1 +1,1 @@
-export { default as useSpinner } from './useSpinner';
+export * from './useSwipe';

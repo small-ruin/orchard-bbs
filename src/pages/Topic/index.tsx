@@ -7,6 +7,9 @@ import getTopicData from '../../crawler/topic'
 import { Body, Card, CardItem, Container, Spinner, Toast, View } from 'native-base';
 import { RootStackParamList, ScreenName, StackNavParams, TopicData } from '../../types';
 import { Colors } from '../../commonStyle';
+import { urlChangePage } from '../../utils';
+import { useSwipe } from '../../hooks';
+import { ScrollView } from 'react-native-gesture-handler';
 
 type TopicScreenProp = StackNavigationProp<RootStackParamList<StackNavParams>, ScreenName.TOPIC>;
 type TopicRouteProp = RouteProp<RootStackParamList<StackNavParams>, ScreenName.TOPIC>;
@@ -20,9 +23,33 @@ export default function Topic({ route, navigation }: Props) {
     console.log('topic', url);
     const [data, setData] = useState<TopicData | undefined>(undefined)
     const [contentWidth,setContentWidth] = useState<number>(useWindowDimensions().width)
-    let [shouldShowSpinner, setShouldShowSpinner] = useState(true);
+    const [shouldShowSpinner, setShouldShowSpinner] = useState(true);
+    const { onTouchStart, onTouchEnd } = useSwipe(onSwipeLeft, onSwipeRight, 6)
 
     let windowDimensions = useWindowDimensions()
+
+    function onSwipeLeft() {
+        if (data?.page) {
+            let { now, total } = data.page;
+            if (now >= total) {
+                Toast.show({ text: '已经到最后一页了！' });
+            } else {
+                const newUrl = urlChangePage(url, ++now)
+                navigation.push(ScreenName.TOPIC, { url: newUrl });
+            }
+        }
+    }
+    function onSwipeRight() {
+        if (data?.page) {
+            const { now, total } = data.page;
+            if (now === 1) {
+                Toast.show({ text: '已经是第一页了！' });
+            } else {
+                navigation.goBack();
+            }
+        }
+    }
+    
     useEffect(() => {
         getTopicData(url).then(data => {
             setData(data);
@@ -32,7 +59,6 @@ export default function Topic({ route, navigation }: Props) {
                 })
             }
             setShouldShowSpinner(false);
-            console.log(data?.posts.map(i => i.poster))
         }, err => {
             Toast.show({ text: err});
         })
@@ -48,9 +74,11 @@ export default function Topic({ route, navigation }: Props) {
         }
     }, [])
     return (
-        <Container>
+        <Container >
             { shouldShowSpinner && <Spinner  /> }
             <FlatList
+                onTouchStart={onTouchStart}
+                onTouchEnd={onTouchEnd}
                 data={data?.posts}
                 keyExtractor={(item, idx) => item.time || idx + ''}
                 renderItem={({item}) => <Card style={styles.card} >
